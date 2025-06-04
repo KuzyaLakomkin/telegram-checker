@@ -1,17 +1,19 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 import os
 
 app = Flask(__name__)
+CORS(app)  # ← вот это обязательно
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME")
 
-@app.route('/')
+@app.route("/")
 def index():
     return "Telegram checker running!"
 
-@app.route('/check-subscription', methods=['POST'])
+@app.route("/check-subscription", methods=["POST"])
 def check_subscription():
     data = request.get_json()
     user_id = data.get("user_id")
